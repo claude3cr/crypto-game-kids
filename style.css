@@ -66,22 +66,39 @@ html,body{
 #screen{ position:relative; flex:1 1 auto; min-height:0; }
 
 /* ---------- Home: big game cards ---------- */
-.home{
-  position:absolute; inset:0;
+.home{ position:absolute; inset:0; display:flex; flex-direction:column; }
+.home-header{ flex:0 0 auto; text-align:center; padding:2vh 3vw .4vh; }
+.home-brand{
+  font-size: clamp(24px, 5vh, 52px); font-weight:900; letter-spacing:.01em;
+  color:var(--gold); text-shadow:0 2px 0 rgba(0,0,0,.35); line-height:1.1;
+}
+.home-title{ margin-top:.6vh; font-size: clamp(18px, 3.6vh, 36px); font-weight:800; opacity:.95; }
+.home-cards{
+  flex:1 1 auto; min-height:0;
   display:flex; flex-wrap:wrap; gap:4vmin;
   align-content:center; justify-content:center;
-  padding:4vmin; padding-top:15vh;
+  padding:1.5vmin 4vmin 3vmin; overflow:auto;
 }
-.home-brand{
-  position:absolute; top:1vh; left:0; right:0; text-align:center;
-  font-size: clamp(22px, 4.4vh, 46px); font-weight:900; letter-spacing:.01em;
-  color:var(--gold); text-shadow:0 2px 0 rgba(0,0,0,.3);
+
+/* Ignacio's name — bigger, gold, tappable */
+.name-btn{
+  font-size:1.4em; font-weight:900; color:var(--gold);
+  background:rgba(247,181,0,.14); border:2px solid rgba(247,181,0,.55);
+  border-radius:14px; padding:.02em .38em; line-height:1.1; vertical-align:-3px;
+  text-shadow:0 2px 0 rgba(0,0,0,.3);
 }
-.home-title{
-  position:absolute; top:calc(1vh + clamp(30px, 5.6vh, 60px)); left:0; right:0; text-align:center;
-  font-size: clamp(18px, 3.4vh, 34px); font-weight:800; opacity:.9;
+.name-btn:active{ transform:scale(.9); }
+.name-btn.bump{ animation: bump .4s ease; }
+
+/* language bar — all four flags, the active one highlighted */
+.langbar{ display:flex; gap:.3em; align-items:center; }
+.flag{
+  font-size: clamp(22px, 4.2vh, 36px); line-height:1; color:var(--ink);
+  background:rgba(255,255,255,.06); border:2px solid transparent; border-radius:12px;
+  padding:.08em .16em; opacity:.5;
 }
-.lang-btn{ font-size: clamp(24px, 4.6vh, 40px); }
+.flag.active{ opacity:1; border-color:var(--gold); background:rgba(247,181,0,.16); }
+.flag:active{ transform:scale(.9); }
 .game-card{
   border:none; border-radius:32px; color:var(--ink);
   background:linear-gradient(160deg, var(--bg2), #0b1130);
@@ -98,7 +115,14 @@ html,body{
 /* ---------- Generic game layout ---------- */
 .game{ position:absolute; inset:0; display:flex; flex-direction:column; }
 .stage{ flex:1 1 58%; position:relative; overflow:hidden; }
-.choices{ flex:0 0 42%; display:flex; gap:2.5vmin; padding:2.5vmin; }
+.choices{ flex:0 0 42%; display:flex; gap:2.5vmin; padding:2.5vmin; overflow:hidden; }
+
+/* short landscape (e.g. split-screen iPad): shrink the big choice emoji so it
+   can't bleed out of the 42% band */
+@media (orientation:landscape) and (max-height:820px){
+  .choice .ani{ font-size:clamp(50px, 16vh, 150px); }
+  .sectores .c-emoji{ font-size:clamp(70px, 20vh, 180px); }
+}
 
 .choice{
   flex:1; border:none; border-radius:30px; color:#06121e;

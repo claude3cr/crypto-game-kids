@@ -39,6 +39,7 @@ function chartScenario(stage, dir){
     ? 'M20,210 L110,170 L190,180 L280,90 L380,30'
     : 'M20,30 L110,80 L190,70 L280,160 L380,210';
   path.setAttribute('d', d); path.setAttribute('class', dir);
+  path.setAttribute('vector-effect', 'non-scaling-stroke');  // even stroke in any aspect ratio
   // an arrow head at the end of the line
   const head = el('div', 'chart-head ' + dir);
   head.textContent = dir === 'up' ? '⬆️' : '⬇️';
@@ -61,10 +62,10 @@ function start(root, services){
         <div class="prompt">${t.t('bb_prompt')}</div>
       </div>
       <div class="choices">
-        <button class="choice bull" data-dir="up" aria-label="up">
+        <button class="choice bull" data-dir="up" aria-label="${t.t('bb_up')}">
           <span class="ani">🐂</span><span class="word">${t.t('bb_up')}</span><span class="en">BULL</span>
         </button>
-        <button class="choice bear" data-dir="down" aria-label="down">
+        <button class="choice bear" data-dir="down" aria-label="${t.t('bb_down')}">
           <span class="ani">🐻</span><span class="word">${t.t('bb_down')}</span><span class="en">BEAR</span>
         </button>
       </div>

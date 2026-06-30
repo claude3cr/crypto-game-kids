@@ -7,14 +7,27 @@
 // ============================================================================
 
 const WORDS = [
-  { emoji:'🪙', es:'MONEDA',   en:'COIN',    nl:'MUNT',    pl:'MONETA'   },
-  { emoji:'🐂', es:'TORO',     en:'BULL',    nl:'STIER',   pl:'BYK'      },
-  { emoji:'🐻', es:'OSO',      en:'BEAR',    nl:'BEER',    pl:'BANIA'    },
-  { emoji:'🚀', es:'COHETE',   en:'ROCKET',  nl:'RAKET',   pl:'RAKIETA'  },
-  { emoji:'💎', es:'DIAMANTE', en:'DIAMOND', nl:'DIAMANT', pl:'DIAMENT'  },
-  { emoji:'💰', es:'DINERO',   en:'MONEY',   nl:'GELD',    pl:'KASA'     },
-  { emoji:'📈', es:'GRÁFICO',  en:'CHART',   nl:'GRAFIEK', pl:'WYKRES'   },
-  { emoji:'⭐', es:'ESTRELLA', en:'STAR',    nl:'STER',    pl:'GWIAZDA'  },
+  { emoji:'🪙', es:'MONEDA',   en:'COIN',    nl:'MUNT',     pl:'MONETA'    },
+  { emoji:'₿',  es:'BITCOIN',  en:'BITCOIN', nl:'BITCOIN',  pl:'BITCOIN'   },
+  { emoji:'🐂', es:'TORO',     en:'BULL',    nl:'STIER',    pl:'BYK'       },
+  { emoji:'🐻', es:'OSO',      en:'BEAR',    nl:'BEER',     pl:'NIEDŹWIEDŹ'},
+  { emoji:'🌙', es:'LUNA',     en:'MOON',    nl:'MAAN',     pl:'KSIĘŻYC'   },
+  { emoji:'🚀', es:'COHETE',   en:'ROCKET',  nl:'RAKET',    pl:'RAKIETA'   },
+  { emoji:'💎', es:'DIAMANTE', en:'DIAMOND', nl:'DIAMANT',  pl:'DIAMENT'   },
+  { emoji:'🐳', es:'BALLENA',  en:'WHALE',   nl:'WALVIS',   pl:'WIELORYB'  },
+  { emoji:'🔑', es:'LLAVE',    en:'KEY',     nl:'SLEUTEL',  pl:'KLUCZ'     },
+  { emoji:'👛', es:'CARTERA',  en:'WALLET',  nl:'PORTEMONNEE', pl:'PORTFEL'},
+  { emoji:'⛏️', es:'MINERÍA',  en:'MINING',  nl:'MIJNEN',   pl:'KOPANIE'   },
+  { emoji:'📈', es:'GRÁFICO',  en:'CHART',   nl:'GRAFIEK',  pl:'WYKRES'    },
+  { emoji:'🏦', es:'BANCO',    en:'BANK',    nl:'BANK',     pl:'BANK'      },
+  { emoji:'🤖', es:'ROBOT',    en:'ROBOT',   nl:'ROBOT',    pl:'ROBOT'     },
+  { emoji:'🐕', es:'PERRO',    en:'DOGE',    nl:'HOND',     pl:'PIES'      },
+  { emoji:'💰', es:'DINERO',   en:'MONEY',   nl:'GELD',     pl:'PIENIĄDZE' },
+  { emoji:'🔒', es:'CANDADO',  en:'LOCK',    nl:'SLOT',     pl:'KŁÓDKA'    },
+  { emoji:'⛓️', es:'CADENA',   en:'CHAIN',   nl:'KETTING',  pl:'ŁAŃCUCH'   },
+  { emoji:'🥇', es:'ORO',      en:'GOLD',    nl:'GOUD',     pl:'ZŁOTO'     },
+  { emoji:'💵', es:'DÓLAR',    en:'DOLLAR',  nl:'DOLLAR',   pl:'DOLAR'     },
+  { emoji:'🧱', es:'BLOQUE',   en:'BLOCK',   nl:'BLOK',     pl:'BLOK'      },
 ];
 
 let state = null;

@@ -10,8 +10,10 @@
 // No fail. Words: BUENO / MALO / SÍ / NO / CUIDADO so he reads.
 // ============================================================================
 
-const GOOD = ['🪙','💎','🟡'];
-const BAD  = ['⚠️','💀','🦂'];
+// good = treasure/trust, bad = scam/danger — visually distinct so he must JUDGE
+// the coin (not just match a ✅/⚠️ badge to a button). Glow is gentle confirmation.
+const GOOD = ['🪙','💎','🌟','🤝','🟢'];
+const BAD  = ['💀','🦂','👹','⚠️','🔻'];
 let state = null;
 
 function start(root, services){
@@ -23,10 +25,10 @@ function start(root, services){
         <div class="item" id="cdItem"></div>
       </div>
       <div class="choices">
-        <button class="choice safe"   data-pick="good" aria-label="good">
+        <button class="choice safe"   data-pick="good" aria-label="${t.t('cd_yes')}">
           <span class="ani">✅</span><span class="word">${t.t('cd_yes')}</span><span class="en">SAFE</span>
         </button>
-        <button class="choice danger" data-pick="bad" aria-label="bad">
+        <button class="choice danger" data-pick="bad" aria-label="${t.t('cd_no')}">
           <span class="ani">🛑</span><span class="word">${t.t('cd_no')}</span><span class="en">SCAM</span>
         </button>
       </div>
@@ -49,11 +51,8 @@ function newRound(){
 
   s.kind = Math.random() < 0.5 ? 'good' : 'bad';
   s.item.className = 'item ' + s.kind;
-  if (s.kind === 'good'){
-    s.item.innerHTML = `<span class="face">${GOOD[(Math.random()*GOOD.length)|0]}</span><span class="badge">✅</span>`;
-  } else {
-    s.item.innerHTML = `<span class="face">${BAD[(Math.random()*BAD.length)|0]}</span><span class="badge">⚠️</span>`;
-  }
+  const set = s.kind === 'good' ? GOOD : BAD;
+  s.item.innerHTML = `<span class="face">${set[(Math.random()*set.length)|0]}</span>`;
 }
 
 function onChoose(btn){

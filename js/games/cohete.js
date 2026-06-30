@@ -39,8 +39,8 @@ function newRound(){
   s.rocket.className = 'rocket';                 // reset to pad
   s.rocket.textContent = '🚀';
 
-  // fuel bar fills over a random window (2.2–3.6s); when full → auto-launch
-  const window = 2200 + Math.random() * 1400;
+  // fuel bar fills over a random window (3.0–4.5s — gentle for a 4yo); when full → auto-launch
+  const window = 3000 + Math.random() * 1500;
   s.fuel.style.transition = 'none';
   s.fuel.style.width = '0%';
   void s.fuel.offsetWidth;
@@ -77,6 +77,10 @@ function launchWithout(){
 function stop(){
   const s = state; if (!s) return;
   clearTimeout(s.launchTimer); clearTimeout(s.nextTimer);
+  // neutralize the in-flight CSS fuel transition so a rapid Home/lang switch
+  // can't leave a half-filled bar flashing on rebuild
+  if (s.fuel){ s.fuel.style.transition = 'none'; s.fuel.style.width = '0%'; }
+  if (s.rocket){ s.rocket.className = 'rocket'; }
   state = null;
 }
 

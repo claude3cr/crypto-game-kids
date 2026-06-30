@@ -14,7 +14,7 @@
 // ============================================================================
 import { Audio } from './audio.js';
 import { GAMES } from './js/games/index.js';
-import { i18n } from './translations.js';
+import { i18n, LANGS } from './translations.js';
 
 const NAME = 'Ignacio';                 // who's playing — shown on the home screen
 const STORE_KEY = 'crypto-kids.wallet.v1';
@@ -82,16 +82,46 @@ function showHome(){
   const home = document.createElement('div');
   home.className = 'home';
   home.innerHTML = `
-    <div class="home-brand">📈 Learning Crypto</div>
-    <div class="home-title">${NAME}, ${i18n.t('tapGame')} 👇</div>`;
+    <div class="home-header">
+      <div class="home-brand">📈 Learning Crypto</div>
+      <div class="home-title"><button class="name-btn" id="nameBtn">${NAME}</button>, ${i18n.t('tapGame')} 👇</div>
+    </div>
+    <div class="home-cards" id="homeCards"></div>`;
+  const cards = home.querySelector('#homeCards');
   GAMES.forEach(g => {
     const card = document.createElement('button');
     card.className = 'game-card' + (g.locked ? ' locked' : '');
     card.innerHTML = `<span class="ico">${g.icon}</span><span class="label">${i18n.title(g.id)}</span>`;
     if (!g.locked) card.addEventListener('click', () => startGame(g));
-    home.appendChild(card);
+    cards.appendChild(card);
   });
   screen.appendChild(home);
+
+  // Ignacio's name is tappable too — a little personalized celebration
+  home.querySelector('#nameBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    Audio.unlock(); Audio.star();
+    bump('nameBtn'); nameSparkle(e.currentTarget);
+  });
+}
+
+// a burst of sparkles from Ignacio's name
+function nameSparkle(anchor){
+  const r = anchor.getBoundingClientRect();
+  const bits = ['⭐','✨','🎉','🪙','💫'];
+  for (let i = 0; i < 12; i++){
+    const s = document.createElement('div');
+    s.className = 'flycoin'; s.textContent = bits[(Math.random()*bits.length)|0];
+    s.style.left = (r.left + r.width/2 - 16) + 'px';
+    s.style.top  = (r.top + r.height/2 - 16) + 'px';
+    document.body.appendChild(s);
+    const ang = Math.random()*Math.PI*2, dist = 60 + Math.random()*120;
+    requestAnimationFrame(() => {
+      s.style.transform = `translate(${Math.cos(ang)*dist}px, ${Math.sin(ang)*dist + 40}px) rotate(${(Math.random()*360)|0}deg)`;
+      s.style.opacity = '0';
+    });
+    setTimeout(() => s.remove(), 700);
+  }
 }
 
 function startGame(g){
@@ -105,19 +135,45 @@ function startGame(g){
 
 homeBtn.addEventListener('click', () => { Audio.unlock(); showHome(); });
 
-// ---------- language toggle (cycles 🇪🇸 → 🇬🇧 → 🇳🇱 → 🇵🇱) ----------
-const langBtn = document.getElementById('langBtn');
-langBtn.addEventListener('click', () => { Audio.unlock(); i18n.next(); });
+// ---------- language bar (all 4 flags always visible; tap to pick) ----------
+const langBar = document.getElementById('langBar');
+function renderLangBar(){
+  langBar.innerHTML = '';
+  LANGS.forEach(l => {
+    const b = document.createElement('button');
+    b.className = 'flag' + (l.code === i18n.lang ? ' active' : '');
+    b.textContent = l.flag;
+    b.setAttribute('aria-label', l.code);
+    b.setAttribute('aria-pressed', l.code === i18n.lang ? 'true' : 'false');
+    b.addEventListener('click', () => { Audio.unlock(); i18n.set(l.code); });
+    langBar.appendChild(b);
+  });
+}
 i18n.onChange(() => {
-  langBtn.textContent = i18n.flag();
+  document.documentElement.lang = i18n.lang;   // keep <html lang> honest for VoiceOver
+  renderLangBar();
   if (active) startGame(active);   // rebuild the running game in the new language
   else showHome();                 // re-render home (greeting + card titles)
 });
 
+// ---------- hidden parent gesture: long-press the wallet to reset coins/stars ----------
+(function setupWalletReset(){
+  const w = document.getElementById('wallet');
+  let timer = null;
+  const start = () => { timer = setTimeout(() => {
+    wallet.coins = 0; wallet.stars = 0; wallet.render(); wallet.save();
+    Audio.unlock(); Audio.star(); bump('coinCount'); bump('starCount');
+  }, 1500); };
+  const cancel = () => { clearTimeout(timer); };
+  w.addEventListener('pointerdown', start);
+  ['pointerup','pointerleave','pointercancel'].forEach(ev => w.addEventListener(ev, cancel));
+})();
+
 // ---------- boot ----------
 wallet.load();
 i18n.load();
-langBtn.textContent = i18n.flag();
+document.documentElement.lang = i18n.lang;
+renderLangBar();
 showHome();
 
 // Offline support for "Add to Home Screen". Best-effort; harmless if it fails.
