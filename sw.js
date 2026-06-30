@@ -2,9 +2,9 @@
 // Bump CACHE when you change any shell file.
 // Bump these THREE together on any shell change:
 //   1) index.html ?v=N   2) the ?v=N in this SHELL list   3) the CACHE constant
-const CACHE = 'crypto-kids-v7';
+const CACHE = 'crypto-kids-v8';
 const SHELL = [
-  './', './index.html', './style.css?v=7', './app.js?v=7', './audio.js',
+  './', './index.html', './style.css?v=8', './app.js?v=8', './audio.js',
   './translations.js',
   './js/games/index.js', './js/games/bull-or-bear.js',
   './js/games/cohete.js', './js/games/cuidado.js', './js/games/palabras.js',

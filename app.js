@@ -197,6 +197,13 @@ renderLangBar();
 showHome();
 
 // Offline support for "Add to Home Screen". Best-effort; harmless if it fails.
+// When a new version deploys, the fresh service worker activates and takes
+// control → reload once so the installed app picks up the update automatically
+// (otherwise the home-screen app can keep serving the old cached build).
 if ('serviceWorker' in navigator) {
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return; refreshing = true; location.reload();
+  });
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
