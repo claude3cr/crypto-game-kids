@@ -11,8 +11,11 @@ dumbed down from grown-up crypto. Public repo, GitHub Pages, no backend, no buil
 - Sibling project it borrows concepts from: `~/crypto-youtube` (the private digest).
 
 ## Core decisions (locked — don't relitigate)
-- **Audience**: one almost-4-year-old, mostly Spanish, can't read in any language yet.
-- **Sound effects ONLY, no words** — synthesized via Web Audio (`audio.js`), no audio files.
+- **Audience**: one almost-4-year-old, mostly Spanish, now learning letters/words.
+- **Sound effects** synthesized via Web Audio (`audio.js`), no audio files, no voice/narration.
+- **Words ARE shown** (he's learning to read): **Spanish primary** (SUBE/BAJA, SÍ/NO, the
+  `¿…?` prompt, praise like ¡MUY BIEN!) + a **gold English crypto term** (BULL/BEAR, SAFE/
+  SCAM, BUY EARLY) so he picks up real crypto lingo. One language toggle is a future option.
 - **No fail state**: right = chime + confetti + coin; wrong = soft boop + wobble + retry.
   No score shown, no timer, no game-over. Goal at this age = keep tapping, stay happy.
 - **Reward economy**: correct answer → 1 coin (flies to jar); every 5 coins → 1 ⭐.
@@ -25,10 +28,11 @@ dumbed down from grown-up crypto. Public repo, GitHub Pages, no backend, no buil
 - **iPad app feel**: `manifest.webmanifest` + apple meta = Add to Home Screen, fullscreen.
   `sw.js` caches the shell for offline play.
 
-## Mapping to grown-up crypto (`crypto-youtube`)
-- v1 direction up/down 🐂/🐻  = the `creatorStance` field (bullish/bearish), simplest form.
-- future `preposition` 🚀 = getting into an `upcoming` project / token sale *before* launch.
-- future `risk` 🚦 = the conflict/warning flags (sponsored, disclosedHolding, `warning` stance).
+## Mapping to grown-up crypto (`crypto-youtube`) — 3 games live
+- `bull-or-bear` 🐂/🐻 = the `creatorStance` field (bullish/bearish), direction up/down.
+- `cohete` 🚀 = prepositioning: getting into an `upcoming` project / token sale *before* launch.
+- `cuidado` 🚦 = the conflict/warning flags (sponsored, disclosedHolding, `warning` stance).
+- Next (~14): real charts, spot opportunities, actual trading — new games/scenarios.
 
 ## Architecture
 ```
@@ -36,7 +40,9 @@ index.html              shell; iPad fullscreen meta; loads app.js (module)
 app.js                  ENGINE — wallet, top bar, home grid, start/stop a game
 audio.js                synthesized SFX: good/bad/coin/star (+ unlock() on first tap)
 js/games/index.js       GAME REGISTRY (order = home order; `locked:true` = coming-soon card)
-js/games/bull-or-bear.js  v1 game + SCENARIOS list
+js/games/bull-or-bear.js  direction up/down + SCENARIOS list (arrow/coin-rides-arrow/chart)
+js/games/cohete.js      prepositioning — tap rocket before the fuel bar fills (no fail)
+js/games/cuidado.js     risk — good coin vs scam (✅/⚠️), tap SÍ/NO
 sw.js                   offline cache (bump CACHE + ?v= on shell changes)
 icon.svg, manifest.webmanifest, .nojekyll
 ```
