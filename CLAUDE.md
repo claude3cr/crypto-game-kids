@@ -16,11 +16,16 @@ dumbed down from grown-up crypto. Public repo, GitHub Pages, no backend, no buil
 - **Words ARE shown** (he's learning to read): **localized primary word** (SUBE/BAJA, SÍ/NO,
   the `¿…?` prompt, praise) + a **gold English crypto term** (BULL/BEAR, SAFE/SCAM, BUY EARLY)
   so he picks up real crypto lingo.
-- **4 languages** (`translations.js` + `i18n`): ES (default) / EN / NL / PL, flag toggle in the
-  top bar (cycles, persisted in `localStorage` `crypto-kids.lang`). Games read every string from
-  `services.i18n`; switching language rebuilds the running game. Gold crypto terms stay English.
-- **Branding**: home shows "📈 Learning Crypto" + "Ignacio, …" greeting (NAME const in app.js).
-  Title/manifest = "Learning Crypto" (repo stays `crypto-kids`).
+- **4 languages** (`translations.js` + `i18n`): ES (default) / EN / NL / PL. All **four flags are
+  always visible** in the top bar (active one highlighted), persisted in `localStorage`
+  `crypto-kids.lang`. Games read every string from `services.i18n`; switching language rebuilds the
+  running game and updates `<html lang>`. Gold crypto terms (BULL/BEAR/SAFE/SCAM/BUY) stay English.
+- **Branding**: home is a flow header — "📈 Learning Crypto" (top) + greeting where **"Ignacio" is a
+  gold, bigger, tappable button** (NAME const in app.js; tap = sparkle + sound). Title/manifest =
+  "Learning Crypto" (repo stays `crypto-kids`).
+- **Hidden parent gesture**: long-press the wallet (1.5s) resets coins/stars.
+- **Icons**: raster PNGs `icon-180/192/512.png` (generated from `icon.svg`) for the iOS Home Screen
+  + manifest; SVG kept as supplementary. Regenerate by rendering `icon.svg` if the mark changes.
 - **No fail state**: right = chime + confetti + coin; wrong = soft boop + wobble + retry.
   No score shown, no timer, no game-over. Goal at this age = keep tapping, stay happy.
 - **Reward economy**: correct answer → 1 coin (flies to jar); every 5 coins → 1 ⭐.
@@ -37,9 +42,13 @@ dumbed down from grown-up crypto. Public repo, GitHub Pages, no backend, no buil
 - `bull-or-bear` 🐂/🐻 (~4) = `crypto-youtube` `creatorStance` (bullish/bearish), direction up/down.
 - `cohete` 🚀 (~6-8) = prepositioning: get into an `upcoming` token sale *before* launch.
 - `cuidado` 🚦 (~6-8) = conflict/warning flags (sponsored, disclosedHolding, `warning`).
-- `palabras` 🔤 (~4) = learn-to-read crypto words (picture → matching word, multilingual).
-- `sectores` 🗂️ (~8+) = sort real coins into sectors — from **`claude3cr/crypto-top100-sector-
-  dashboard`** (14 sectors / top-100). The complex one: real tickers, 3 choices, seed of diversifying.
+- `palabras` 🔤 (~4) = learn-to-read **crypto-only** words (picture → matching word, multilingual;
+  big word = chosen language, gold sub-label = English crypto term).
+- `sectores` 🗂️ (~8+) = sort real coins into sectors — reconciled + independently verified against
+  the real top-100 rows of **`claude3cr/crypto-top100-sector-dashboard`**. 8 kid buckets (bitcoin,
+  l1, l2, defi, meme, ai, stable, rwa), 28 coins, adjacency-weighted distractors. Two deliberate
+  folds: Chainlink (dashboard "Oracle")→DEFI, Render (dashboard "DePIN")→AI. To refresh after a new
+  dashboard snapshot, re-run the reconcile (verify each `COINS[].s` against the dashboard category).
 - Next (~14): real charts, spot opportunities, actual trading — new games/scenarios.
 
 ## Architecture
