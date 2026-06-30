@@ -12,22 +12,22 @@
 
 const GOOD = ['🪙','💎','🟡'];
 const BAD  = ['⚠️','💀','🦂'];
-const WIN  = ['¡MUY BIEN!', '¡LISTO!', '¡BIEN!', '¡SÍ!'];
 let state = null;
 
 function start(root, services){
+  const t = services.i18n;
   root.innerHTML = `
     <div class="game cuidado">
       <div class="stage" id="cdStage">
-        <div class="prompt">¿BUENO o MALO?<span class="en">GOOD or BAD?</span></div>
+        <div class="prompt">${t.t('cd_prompt')}</div>
         <div class="item" id="cdItem"></div>
       </div>
       <div class="choices">
-        <button class="choice safe"   data-pick="good" aria-label="Sí, bueno">
-          <span class="ani">✅</span><span class="word">SÍ</span><span class="en">SAFE</span>
+        <button class="choice safe"   data-pick="good" aria-label="good">
+          <span class="ani">✅</span><span class="word">${t.t('cd_yes')}</span><span class="en">SAFE</span>
         </button>
-        <button class="choice danger" data-pick="bad" aria-label="No, cuidado">
-          <span class="ani">🛑</span><span class="word">NO</span><span class="en">SCAM</span>
+        <button class="choice danger" data-pick="bad" aria-label="bad">
+          <span class="ani">🛑</span><span class="word">${t.t('cd_no')}</span><span class="en">SCAM</span>
         </button>
       </div>
     </div>`;
@@ -64,7 +64,7 @@ function onChoose(btn){
     s.services.audio.good();
     btn.classList.add('win');
     s.services.reward(btn);
-    praise(s.stage, WIN[(Math.random()*WIN.length)|0]);
+    praise(s.stage, s.services.i18n.praise());
     confetti(s.stage);
     s.timer = setTimeout(newRound, 1100);
   } else {

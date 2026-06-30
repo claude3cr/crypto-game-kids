@@ -48,24 +48,24 @@ function chartScenario(stage, dir){
 }
 
 const SCENARIOS = [arrowScenario, coinScenario, chartScenario];
-const PRAISE = ['¡MUY BIEN!', '¡BIEN!', '¡GENIAL!', '¡SÍ!', '¡PERFECTO!'];
 
 // ---- game ------------------------------------------------------------------
 
 let state = null;
 
 function start(root, services){
+  const t = services.i18n;
   root.innerHTML = `
     <div class="game">
       <div class="stage" id="bbStage">
-        <div class="prompt">¿SUBE o BAJA?<span class="en">UP or DOWN?</span></div>
+        <div class="prompt">${t.t('bb_prompt')}</div>
       </div>
       <div class="choices">
-        <button class="choice bull" data-dir="up" aria-label="Sube">
-          <span class="ani">🐂</span><span class="word">SUBE</span><span class="en">BULL</span>
+        <button class="choice bull" data-dir="up" aria-label="up">
+          <span class="ani">🐂</span><span class="word">${t.t('bb_up')}</span><span class="en">BULL</span>
         </button>
-        <button class="choice bear" data-dir="down" aria-label="Baja">
-          <span class="ani">🐻</span><span class="word">BAJA</span><span class="en">BEAR</span>
+        <button class="choice bear" data-dir="down" aria-label="down">
+          <span class="ani">🐻</span><span class="word">${t.t('bb_down')}</span><span class="en">BEAR</span>
         </button>
       </div>
     </div>`;
@@ -98,7 +98,7 @@ function onChoose(btn){
     s.services.audio.good();
     btn.classList.add('win');
     s.services.reward(btn);
-    praise(s.stage, PRAISE[(Math.random()*PRAISE.length)|0]);
+    praise(s.stage, s.services.i18n.praise());
     confetti(s.stage);
     s.timer = setTimeout(newRound, 1100);
   } else {

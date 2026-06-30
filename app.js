@@ -14,7 +14,9 @@
 // ============================================================================
 import { Audio } from './audio.js';
 import { GAMES } from './js/games/index.js';
+import { i18n } from './translations.js';
 
+const NAME = 'Ignacio';                 // who's playing — shown on the home screen
 const STORE_KEY = 'crypto-kids.wallet.v1';
 
 // ---------- wallet (coins → every 5 = a star) ----------
@@ -68,6 +70,7 @@ let active = null;   // currently running game
 function makeServices(){
   return {
     audio: Audio,
+    i18n,                                        // games read their words/praise from here
     reward: (fromEl) => wallet.reward(fromEl),   // correct answer → coin
   };
 }
@@ -78,11 +81,13 @@ function showHome(){
   screen.innerHTML = '';
   const home = document.createElement('div');
   home.className = 'home';
-  home.innerHTML = `<div class="home-title">Toca un juego 👇</div>`;
+  home.innerHTML = `
+    <div class="home-brand">📈 Learning Crypto</div>
+    <div class="home-title">${NAME}, ${i18n.t('tapGame')} 👇</div>`;
   GAMES.forEach(g => {
     const card = document.createElement('button');
     card.className = 'game-card' + (g.locked ? ' locked' : '');
-    card.innerHTML = `<span class="ico">${g.icon}</span><span class="label">${g.title}</span>`;
+    card.innerHTML = `<span class="ico">${g.icon}</span><span class="label">${i18n.title(g.id)}</span>`;
     if (!g.locked) card.addEventListener('click', () => startGame(g));
     home.appendChild(card);
   });
@@ -100,8 +105,19 @@ function startGame(g){
 
 homeBtn.addEventListener('click', () => { Audio.unlock(); showHome(); });
 
+// ---------- language toggle (cycles 🇪🇸 → 🇬🇧 → 🇳🇱 → 🇵🇱) ----------
+const langBtn = document.getElementById('langBtn');
+langBtn.addEventListener('click', () => { Audio.unlock(); i18n.next(); });
+i18n.onChange(() => {
+  langBtn.textContent = i18n.flag();
+  if (active) startGame(active);   // rebuild the running game in the new language
+  else showHome();                 // re-render home (greeting + card titles)
+});
+
 // ---------- boot ----------
 wallet.load();
+i18n.load();
+langBtn.textContent = i18n.flag();
 showHome();
 
 // Offline support for "Add to Home Screen". Best-effort; harmless if it fails.

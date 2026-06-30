@@ -70,12 +70,18 @@ html,body{
   position:absolute; inset:0;
   display:flex; flex-wrap:wrap; gap:4vmin;
   align-content:center; justify-content:center;
-  padding:4vmin; padding-top:7vh;
+  padding:4vmin; padding-top:15vh;
+}
+.home-brand{
+  position:absolute; top:1vh; left:0; right:0; text-align:center;
+  font-size: clamp(22px, 4.4vh, 46px); font-weight:900; letter-spacing:.01em;
+  color:var(--gold); text-shadow:0 2px 0 rgba(0,0,0,.3);
 }
 .home-title{
-  position:absolute; top:1vh; left:0; right:0; text-align:center;
-  font-size: clamp(18px, 3.4vh, 34px); font-weight:800; opacity:.85;
+  position:absolute; top:calc(1vh + clamp(30px, 5.6vh, 60px)); left:0; right:0; text-align:center;
+  font-size: clamp(18px, 3.4vh, 34px); font-weight:800; opacity:.9;
 }
+.lang-btn{ font-size: clamp(24px, 4.6vh, 40px); }
 .game-card{
   border:none; border-radius:32px; color:var(--ink);
   background:linear-gradient(160deg, var(--bg2), #0b1130);
@@ -204,3 +210,12 @@ html,body{
 @keyframes shake{ 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
 .choice.safe{   background:radial-gradient(120% 120% at 50% 0%, #5cf0ad, var(--up)); }
 .choice.danger{ background:radial-gradient(120% 120% at 50% 0%, #ff97a1, var(--down)); }
+
+/* ---------- Palabras (crypto word game) ---------- */
+.palabras .wg-pic{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:clamp(100px, 34vh, 300px); line-height:1; }
+.word-btn{ color:#06121e; }
+.word-btn .big-word{ font-size:clamp(26px, 6.2vh, 72px); font-weight:900; letter-spacing:.04em;
+  text-align:center; padding:0 .2em; line-height:1.05; }
+.choice.w1{ background:radial-gradient(120% 120% at 50% 0%, #8fd0ff, #3f9bff); }
+.choice.w2{ background:radial-gradient(120% 120% at 50% 0%, #ffd98f, #f7b500); }

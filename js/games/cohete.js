@@ -9,14 +9,14 @@
 // Lesson: be early. Words + praise everywhere so he reads.
 // ============================================================================
 
-const WIN = ['¡SUBISTE!', '¡A TIEMPO!', '¡TEMPRANO!', '¡MUY BIEN!'];
 let state = null;
 
 function start(root, services){
+  const t = services.i18n;
   root.innerHTML = `
     <div class="game cohete">
       <div class="stage" id="ckStage">
-        <div class="prompt">¡TOCA EL COHETE ANTES DE QUE DESPEGUE!<span class="en">BUY EARLY!</span></div>
+        <div class="prompt">${t.t('ck_prompt')}<span class="en">BUY EARLY!</span></div>
         <button class="rocket" id="ckRocket" aria-label="Cohete">🚀</button>
         <div class="pad"></div>
         <div class="fuel"><div class="fuel-bar" id="ckFuel"></div></div>
@@ -60,7 +60,7 @@ function onTap(){
   s.rocket.classList.add('ride');               // rides up with a happy face
   s.rocket.textContent = '🚀';
   s.services.reward(s.rocket);
-  praise(s.stage, WIN[(Math.random()*WIN.length)|0]);
+  praise(s.stage, s.services.i18n.praise());
   confetti(s.stage);
   s.nextTimer = setTimeout(newRound, 1300);
 }
@@ -70,7 +70,7 @@ function launchWithout(){
   s.locked = true;
   s.services.audio.bad();
   s.rocket.classList.add('gone');               // leaves without him
-  praise(s.stage, '¡CASI! ¡MÁS RÁPIDO!');
+  praise(s.stage, s.services.i18n.t('ck_miss'));
   s.nextTimer = setTimeout(newRound, 1300);
 }
 
