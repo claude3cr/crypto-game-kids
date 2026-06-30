@@ -7,10 +7,12 @@ import cuidado from './cuidado.js';
 import palabras from './palabras.js';
 import sectores from './sectores.js';
 
+// `requires` = ⭐ needed to unlock (earned: 1 star per 5 correct answers).
+// First two are free; the rest unlock as he plays and earns stars.
 export const GAMES = [
-  bullOrBear,   // ~4: direction up/down (bullish/bearish)
-  cohete,       // ~6-8: prepositioning — get in before the launch
-  cuidado,      // ~6-8: risk / warning flags — good coin vs scam
-  palabras,     // ~4: crypto word game — learn to read crypto words
-  sectores,     // ~8+: sort real coins into sectors (from the sector dashboard)
+  { ...bullOrBear, requires: 0  },   // 1st — free
+  { ...cohete,     requires: 0  },   // 2nd — free
+  { ...cuidado,    requires: 2  },   // 3rd — 2 ⭐
+  { ...palabras,   requires: 5  },   // 4th — 5 ⭐
+  { ...sectores,   requires: 10 },   // 5th — 10 ⭐
 ];

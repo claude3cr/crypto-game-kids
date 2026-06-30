@@ -19,6 +19,12 @@ import { i18n, LANGS } from './translations.js';
 const NAME = 'Ignacio';                 // who's playing — shown on the home screen
 const STORE_KEY = 'crypto-kids.wallet.v1';
 
+// games whose "just unlocked!" celebration has already played (persisted, so it
+// only pulses the first time the child reaches the star threshold)
+const UNLOCK_KEY = 'crypto-kids.announced.v1';
+const announced = new Set((() => { try { return JSON.parse(localStorage.getItem(UNLOCK_KEY)) || []; } catch { return []; } })());
+function announceUnlock(id){ announced.add(id); try { localStorage.setItem(UNLOCK_KEY, JSON.stringify([...announced])); } catch {} }
+
 // ---------- wallet (coins → every 5 = a star) ----------
 const wallet = {
   coins: 0, stars: 0,
@@ -89,13 +95,27 @@ function showHome(){
     <div class="home-cards" id="homeCards"></div>`;
   const cards = home.querySelector('#homeCards');
   GAMES.forEach(g => {
+    const need = g.requires || 0;
+    const unlocked = wallet.stars >= need;
+    const justUnlocked = unlocked && need > 0 && !announced.has(g.id);
     const card = document.createElement('button');
-    card.className = 'game-card' + (g.locked ? ' locked' : '');
-    card.innerHTML = `<span class="ico">${g.icon}</span><span class="label">${i18n.title(g.id)}</span>`;
-    if (!g.locked) card.addEventListener('click', () => startGame(g));
+    card.className = 'game-card' + (unlocked ? '' : ' locked') + (justUnlocked ? ' justunlocked' : '');
+    const badge = unlocked ? '' : `<span class="req">🔒 ${need}⭐</span>`;
+    card.innerHTML = `<span class="ico">${g.icon}</span><span class="label">${i18n.title(g.id)}</span>${badge}`;
+    if (unlocked){
+      card.addEventListener('click', () => startGame(g));
+      if (justUnlocked){ announceUnlock(g.id); }   // celebrate first time it opens
+    } else {
+      // locked: gentle "not yet" — boop + shake, no navigation
+      card.addEventListener('click', () => {
+        Audio.unlock(); Audio.bad();
+        card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+      });
+    }
     cards.appendChild(card);
   });
   screen.appendChild(home);
+  if ([...cards.querySelectorAll('.justunlocked')].length) Audio.star();
 
   // Ignacio's name is tappable too — a little personalized celebration
   home.querySelector('#nameBtn').addEventListener('click', (e) => {

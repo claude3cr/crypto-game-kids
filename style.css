@@ -109,8 +109,17 @@ html,body{
 .game-card:active{ transform:translateY(6px); box-shadow:0 4px 0 rgba(0,0,0,.35), inset 0 0 0 4px rgba(255,255,255,.06); }
 .game-card .ico{ font-size: clamp(60px, 18vh, 150px); line-height:1; }
 .game-card .label{ font-size: clamp(20px, 4vh, 40px); font-weight:800; }
-.game-card.locked{ opacity:.4; }
-.game-card.locked .label::after{ content:" 🔒"; }
+.game-card.locked{ opacity:.5; position:relative; }
+.game-card.locked .ico{ filter:grayscale(.7); }
+/* ⭐ requirement badge on a locked card */
+.req{
+  margin-top:.6vh; font-size: clamp(18px, 3.4vh, 34px); font-weight:900;
+  color:var(--gold); background:rgba(0,0,0,.35); border-radius:14px; padding:.1em .5em;
+}
+.game-card.shake{ animation: wobble .5s ease; }
+/* pulse the moment a game first unlocks */
+.game-card.justunlocked{ animation: unlockpulse 1.1s ease 2; box-shadow:0 0 0 4px var(--gold), 0 10px 0 rgba(0,0,0,.35); }
+@keyframes unlockpulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.06); } }
 
 /* ---------- Generic game layout ---------- */
 .game{ position:absolute; inset:0; display:flex; flex-direction:column; }
