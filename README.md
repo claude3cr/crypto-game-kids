@@ -4,7 +4,7 @@ A first-ever iPad game for a 3.5-year-old, teaching **one real trading instinct 
 time**, dumbed down from grown-up crypto concepts. Sound effects only, no reading, no
 losing — just tap and stack coins.
 
-**Play:** https://claude3cr.github.io/crypto-kids/
+**Play:** https://claude3cr.github.io/crypto-game-kids/
 (On the iPad: Share → *Add to Home Screen* → it opens fullscreen like an app, works offline.)
 
 ## v1 — "Toro o Oso" (Bull or Bear?)

@@ -1,13 +1,14 @@
-# CLAUDE.md — crypto-kids (canonical context)
+# CLAUDE.md — crypto-game-kids (canonical context)
 
 Read this first. Durable source of truth so a fresh session can continue.
 
 ## What it is
 A fullscreen iPad web game teaching a ~3.5-year-old **one real trading instinct at a time**,
 dumbed down from grown-up crypto. Public repo, GitHub Pages, no backend, no build step.
-- Live: https://claude3cr.github.io/crypto-kids/
-- Local: `~/crypto-kids`. Remote: `claude3cr/crypto-kids` (Pages = branch `main`, folder `/` root).
-- Sessions run from `~/.claude3`; `cd "$HOME/crypto-kids"` for commands.
+- Live: https://claude3cr.github.io/crypto-game-kids/
+- Local: `~/crypto-game-kids`. Remote: `claude3cr/crypto-game-kids` (Pages = branch `main`, folder `/` root).
+  (Repo + local folder renamed from `crypto-kids` on 2026-07-02; GitHub keeps redirects from the old name.)
+- Sessions run from `~/.claude3`; `cd "$HOME/crypto-game-kids"` for commands.
 - Sibling project it borrows concepts from: `~/crypto-youtube` (the private digest).
 
 ## Core decisions (locked — don't relitigate)
@@ -22,7 +23,7 @@ dumbed down from grown-up crypto. Public repo, GitHub Pages, no backend, no buil
   running game and updates `<html lang>`. Gold crypto terms (BULL/BEAR/SAFE/SCAM/BUY) stay English.
 - **Branding**: home is a flow header — "📈 Learning Crypto" (top) + greeting where **"Ignacio" is a
   gold, bigger, tappable button** (NAME const in app.js; tap = sparkle + sound). Title/manifest =
-  "Learning Crypto" (repo stays `crypto-kids`).
+  "Learning Crypto" (repo/folder = `crypto-game-kids`; `localStorage` keys keep the `crypto-kids.*` prefix).
 - **Progressive unlocks**: each game has a `requires` (⭐ needed) in `js/games/index.js`. First two
   are free (0); Cuidado=2, Palabras=5, Sectores=10. A game is unlocked when `wallet.stars >= requires`.
   Locked cards are greyed with a "🔒 N⭐" badge and don't navigate (boop + shake). First time a game
@@ -104,11 +105,11 @@ and `stage` is the drawing area. Push new ones into `SCENARIOS`. Current: arrow,
 
 ## Deploy
 ```
-cd "$HOME/crypto-kids"
+cd "$HOME/crypto-game-kids"
 git add -A && git commit -m "..."
 git push                      # remote MUST be the SSH alias github-proton (claude3cr acct)
 ```
-Push remote MUST be `git@github-proton:claude3cr/crypto-kids.git` (plain github.com = wrong
+Push remote MUST be `git@github-proton:claude3cr/crypto-game-kids.git` (plain github.com = wrong
 account). Pages auto-deploys from `main` (root). See `~/.claude3` memory `[[github-ssh-aliases]]`.
 
 ## Gotchas
