@@ -170,6 +170,17 @@ html,body{
 .chart .up{ stroke:var(--up); } .chart .down{ stroke:var(--down); }
 @keyframes draw{ to{ stroke-dashoffset:0; } }
 
+/* balloon scenario */
+.balloon-flight{ display:flex; flex-direction:column; align-items:center; gap:.5vh; }
+.balloon-flight .balloon-arrow{ font-size:clamp(54px, 13vh, 130px); line-height:1; }
+.balloon-flight .balloon-emoji{ font-size:clamp(86px, 26vh, 250px); line-height:1; filter:drop-shadow(0 10px 12px rgba(0,0,0,.38)); }
+.balloon-flight.up{ animation:balloonUp 1.6s ease-out forwards; }
+.balloon-flight.down{ animation:balloonDown 1.6s ease-in forwards; }
+.balloon-flight.down .balloon-emoji{ animation:balloonDeflate 1.6s ease-in forwards; transform-origin:50% 85%; }
+@keyframes balloonUp{ from{transform:translateY(30vh)} to{transform:translateY(-64vh)} }
+@keyframes balloonDown{ from{transform:translateY(-14vh)} to{transform:translateY(66vh)} }
+@keyframes balloonDeflate{ 0%{transform:scale(1)} 55%{transform:scale(.74, .9)} 100%{transform:scale(.42, .28) rotate(8deg); opacity:.8} }
+
 /* confetti burst on a correct answer */
 .confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
 .confetti span{ position:absolute; top:-10%; font-size:clamp(20px,4vh,40px); animation: fall 1.1s ease-in forwards; }

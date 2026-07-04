@@ -48,7 +48,15 @@ function chartScenario(stage, dir){
   return () => scene.remove();
 }
 
-const SCENARIOS = [arrowScenario, coinScenario, chartScenario];
+function balloonScenario(stage, dir){
+  const scene = el('div', 'scene');
+  const balloon = el('div', 'balloon-flight ' + dir);
+  balloon.innerHTML = `<div class="balloon-arrow">${dir === 'up' ? '⬆️' : '⬇️'}</div><div class="balloon-emoji">🎈</div>`;
+  scene.appendChild(balloon); stage.appendChild(scene);
+  return () => scene.remove();
+}
+
+const SCENARIOS = [arrowScenario, coinScenario, chartScenario, balloonScenario];
 
 // ---- game ------------------------------------------------------------------
 
